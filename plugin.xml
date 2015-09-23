@@ -1,0 +1,20 @@
+<library path="src">
+  <class name="Captcha" type="rqt_captcha_task.captcha.Captcha" base_class_type="rqt_gui_py::Plugin">
+    <description>
+      RQT Captcha Plugin
+    </description>
+    <qtgui>
+      <!-- optional grouping...
+      <group>
+        <label>Group</label>
+      </group>
+      <group>
+        <label>Subgroup</label>
+      </group>
+      -->
+      <label>RQT Captcha Plugin</label>
+      <icon type="theme">system-help</icon>
+      <statustip>For Dan's User Study</statustip>
+    </qtgui>
+  </class>
+</library>
