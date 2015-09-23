@@ -33,13 +33,14 @@
 import os
 import time
 import glob
+import sys
 
 import rospy
 import rospkg
 
 from python_qt_binding import loadUi
 from python_qt_binding.QtCore import Qt
-from python_qt_binding.QtGui import QFileDialog, QGraphicsView, QIcon, QWidget, QPixmap
+from python_qt_binding.QtGui import QFileDialog, QGraphicsView, QIcon, QWidget, QPixmap, QApplication
 
 import rosbag
 # import bag_helper
@@ -102,4 +103,9 @@ class CaptchaWidget(QWidget):
                 '\t' +  (self.image_file.split("/")[-1]).split(".")[0] +'\n')
         
 
- 
+if __name__ == "__main__":
+    rospy.init_node('captcha_task')
+    app = QApplication(sys.argv)
+    widget = CaptchaWidget(None)
+    widget.show()
+    sys.exit(app.exec_())
