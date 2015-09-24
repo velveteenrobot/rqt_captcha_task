@@ -65,27 +65,35 @@ class CaptchaWidget(QWidget):
         rp = rospkg.RosPack()
         ui_file = os.path.join(rp.get_path('rqt_captcha_task'), 'resources', 'captcha_widget.ui')
         loadUi(ui_file, self, {'BagGraphicsView': BagGraphicsView})
+        self.keyPressEvent = self._on_key_press
 
         self.setObjectName('CaptchaWidget')
 
-        self.next_button.clicked[bool].connect(self._handle_next_clicked)
-
-        self.next_button.setEnabled(True)
+        # self.next_button.clicked[bool].connect(self._handle_next_clicked)
+        # self.next_button.setEnabled(True)
+        # self.next_button.setText("Submit")
         self.image_count = -1
         self.label.setText("Type the participant ID in the box below.")
-        self.next_button.setText("Submit")
+        
         path = rp.get_path('rqt_captcha_task') + "/resources/captcha_easy"
         self.image_list = glob.glob( path + '/*.gif')
         self.output_path = rp.get_path('rqt_captcha_task') + "/output/"
 
-    def _handle_next_clicked(self, checked):
+    def _on_key_press(self, event):
+        # print(qKeyEvent.key())
+        if event.key() == Qt.Key_Return: 
+            self._handle_next_clicked()
+        # else:
+        #     super().keyPressEvent(event)
+
+    def _handle_next_clicked(self):
 
         self.image_count += 1
         if self.image_count == 0:
             self.participant_id = self.text_input.text()
             self.output_file = self.output_path + self.participant_id + ".txt"
             self.label.setText("Type the characters you see in the box below:")
-            self.next_button.setText("Next ->")
+            # self.next_button.setVisible(False)
         
         
         if not (self.image_count == 0):
