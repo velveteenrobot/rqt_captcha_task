@@ -92,6 +92,9 @@ class CaptchaWidget(QWidget):
         if self.image_count == 0:
             self.participant_id = self.text_input.text()
             self.output_file = self.output_path + self.participant_id + ".txt"
+            with open (self.output_file, 'a') as f:
+                f.write ("Time" + ',' + "User Input" +
+                    ',' +  "Captcha Text" +'\n')
             self.label.setText("Type the characters you see in the box below:")
             # self.next_button.setVisible(False)
         
@@ -107,8 +110,8 @@ class CaptchaWidget(QWidget):
 
     def _record(self):
         with open (self.output_file, 'a') as f: 
-            f.write (str(rospy.Time.now()) + '\t' + self.text_input.text() + 
-                '\t' +  (self.image_file.split("/")[-1]).split(".")[0] +'\n')
+            f.write (str(rospy.Time.now()) + ',' + self.text_input.text() + 
+                ',' +  (self.image_file.split("/")[-1]).split(".")[0] +'\n')
         
 
 if __name__ == "__main__":
