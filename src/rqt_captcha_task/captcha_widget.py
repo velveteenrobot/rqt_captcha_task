@@ -69,9 +69,11 @@ class CaptchaWidget(QWidget):
 
         self.setObjectName('CaptchaWidget')
 
-        # self.next_button.clicked[bool].connect(self._handle_next_clicked)
+        self.push_button.clicked[bool].connect(self._handle_button_clicked)
         # self.next_button.setEnabled(True)
         # self.next_button.setText("Submit")
+        self._practice = True
+        self.push_button.setVisible(False)
         self.image_count = -1
         self.label.setText("Type the participant ID in the box below.")
         
@@ -86,6 +88,10 @@ class CaptchaWidget(QWidget):
         # else:
         #     super().keyPressEvent(event)
 
+    def _handle_button_clicked(self):
+        self._practice = False
+        self.push_button.setVisible(False)
+
     def _handle_next_clicked(self):
 
         self.image_count += 1
@@ -96,10 +102,10 @@ class CaptchaWidget(QWidget):
                 f.write ("Time" + ',' + "User Input" +
                     ',' +  "Captcha Text" +'\n')
             self.label.setText("Type the characters you see in the box below:")
-            # self.next_button.setVisible(False)
+            self.push_button.setVisible(True)
         
         
-        if not (self.image_count == 0):
+        if not (self.image_count == 0) and not self._practice:
             self._record()
         self.text_input.clear()
         self._set_image()
